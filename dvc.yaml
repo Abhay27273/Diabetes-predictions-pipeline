@@ -1,0 +1,21 @@
+stages:
+  preprocess-p:
+    cmd: python source/preprocess.py -d data/raw/data.csv -o data/processed/data.csv
+    deps:
+    - data/raw/data.csv
+    - source/preprocess.py
+    outs:
+    - data/processed/data.csv
+  train-p:
+    cmd: python source/train.py -d data/processed/data.csv -o models/random_forest.pkl
+    deps:
+    - data/processed/data.csv
+    - source/train.py
+    outs:
+    - models/random_forest.pkl
+  evaluate:
+    cmd: python source/evaluate.py -d models/model.pkl -d data/raw/data.csv
+    deps:
+    - data/raw/data.csv
+    - models/model.pkl
+    - source/evaluate.py
